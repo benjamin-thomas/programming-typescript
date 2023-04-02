@@ -393,7 +393,7 @@ if (ageForJohn === 42) {
 
 // EXERCISES
 {
-  // 1. For each of these values, what type will TypeScript infor
+  // 1. For each of these values, what type will TypeScript infer
   let a = 1042; // number
   let b = 'apples and oranges'; // string
   const c = 'pineapples'; // "pineapples"
