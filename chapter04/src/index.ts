@@ -34,31 +34,31 @@
         return 'hello ' + name;
     }
 
-    console.log({greet1: greet1("Benjamin")});
+    console.log({ greet1: greet1("Benjamin") });
 
     // Function expression
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     const greet2 = function (name: string) {
         return 'hello ' + name;
     };
-    console.log({greet2: greet2("Benjamin")});
+    console.log({ greet2: greet2("Benjamin") });
 
     // Arrow function expression
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     const greet3 = (name: string) => {
         return 'hello ' + name;
     };
-    console.log({greet3: greet3("Benjamin")});
+    console.log({ greet3: greet3("Benjamin") });
 
     // Shorthand arrow function expression
     // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     const greet4 = (name: string) => 'hello ' + name;
-    console.log({greet4: greet4("Benjamin")});
+    console.log({ greet4: greet4("Benjamin") });
 
     // Function constructor - not safe!
     const greet5 = new Function('name', 'return "hello " + name');
-    console.log({greet5: greet5("Benjamin")});
-    console.log({greet5_not_safe_not_sound: greet5(1)});
+    console.log({ greet5: greet5("Benjamin") });
+    console.log({ greet5_not_safe_not_sound: greet5(1) });
 }
 
 {
@@ -89,13 +89,13 @@
         userId?: string,
     };
 
-    function log(message: string, ctx: Context = {userId: 'Not signed in'}): void {
+    function log(message: string, ctx: Context = { userId: 'Not signed in' }): void {
         const time = new Date().toLocaleTimeString();
         console.log(time, message, ctx.userId);
     }
 
     log('Page loaded');
-    log('User signed in', {userId: 'da763be'});
+    log('User signed in', { userId: 'da763be' });
 }
 
 {
@@ -107,7 +107,7 @@
             .reduce((total, n) => total + n, 0);
     }
 
-    console.log({sum1: sum1([1, 2, 3])});
+    console.log({ sum1: sum1([1, 2, 3]) });
 
 
     // Or make the function accept a variadic ("rest") parameter as such:
@@ -117,7 +117,7 @@
             .reduce((total, n) => total + n, 0);
     }
 
-    console.log({sum2: sum2(1, 2, 3)});
+    console.log({ sum2: sum2(1, 2, 3) });
 }
 
 {
@@ -126,19 +126,19 @@
         return a + b;
     }
 
-    console.log({normal: add(1, 2)});
+    console.log({ normal: add(1, 2) });
 
     // `apply` binds a value to `this` within your function.
     // In this example, we bind `this` to `null`.
     // `apply` will then "spread" the second arg.
-    console.log({apply: add.apply(null, [1, 2])});
+    console.log({ apply: add.apply(null, [1, 2]) });
 
     // `call` does the same thing as `apply` but applies its arguments in order instead of spreading.
-    console.log({call: add.call(null, 1, 2)});
+    console.log({ call: add.call(null, 1, 2) });
 
     // `bind` also "binds" a `this` argument, but does not execute the function.
     // Instead, it returns a new function.
-    console.log({bind: add.bind(null, 1, 2)()});
+    console.log({ bind: add.bind(null, 1, 2)() });
 
     // `this` gotcha : START
     const x = {
@@ -147,10 +147,10 @@
             return this;
         }
     };
-    console.log({"x.a": x.a()}); // `this` is `x`
+    console.log({ "x.a": x.a() }); // `this` is `x`
     const a = x.a;
     a(); // `this` is now `undefined`!
-    console.log({a: a()});
+    console.log({ a: a() });
     // `this` gotcha : END
 
 
@@ -161,7 +161,7 @@
         return `${this.getDate()}/${this.getMonth()}/${this.getFullYear()}`;
     }
 
-    console.log({fancyDate: fancyDate.call(new Date)});
+    console.log({ fancyDate: fancyDate.call(new Date) });
 }
 
 {
@@ -179,12 +179,12 @@
 
     const fib = fibGen();
     const fib0: IteratorResult<number> = fib.next();
-    console.log({fib: fib0});
-    console.log({fib: fib.next()});
-    console.log({fib: fib.next()});
-    console.log({fib: fib.next()});
-    console.log({fib: fib.next()});
-    console.log({fib: fib.next()});
+    console.log({ fib: fib0 });
+    console.log({ fib: fib.next() });
+    console.log({ fib: fib.next() });
+    console.log({ fib: fib.next() });
+    console.log({ fib: fib.next() });
+    console.log({ fib: fib.next() });
 }
 
 {
@@ -192,7 +192,7 @@
     // They are the flip side of generators: they consume those values
     // The book is not very clear on this subject
     const numbers = {
-        * [Symbol.iterator](): IterableIterator<number> {
+        *[Symbol.iterator](): IterableIterator<number> {
             for (let n = 0; n < 10; n++) {
                 yield n;
             }
@@ -201,16 +201,16 @@
 
     console.log('Consuming the iterator via a for loop...');
     for (const n of numbers) {
-        console.log({n});
+        console.log({ n });
     }
 
     console.log('Consuming the iterator via the spread operator');
     const allNums = [...numbers];
-    console.log({allNums});
+    console.log({ allNums });
 
     console.log('Destructure the iterator');
     const [a, b, ...rest] = numbers;
-    console.log({a, b, rest});
+    console.log({ a, b, rest });
 }
 
 {
@@ -221,7 +221,7 @@
         return a + b;
     }
 
-    console.log({add: add(1, 2)});
+    console.log({ add: add(1, 2) });
 
     // Capture the function into a variable.
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -229,7 +229,7 @@
         return a + b;
     };
     // No type safety!
-    console.log({f: f(1, 2, "wat")}); // bad arg is ignored, in this case.
+    console.log({ f: f(1, 2, "wat") }); // bad arg is ignored, in this case.
 
     // This is TypeScript's syntax for a function's type, or "call signature" (or "type signature")
     // The parameter names `a` and `b` just serve as documentation.
@@ -237,28 +237,28 @@
         function add(a2: number, b2: number): number {
             return a2 + b2;
         };
-    console.log({g: g(1, 2)});
+    console.log({ g: g(1, 2) });
 
     // Remove redundant type annotations on the right
     const h: (a: number, b: number) => number =
         function (a2, b2) {
             return a2 + b2;
         };
-    console.log({h: h(1, 2)});
+    console.log({ h: h(1, 2) });
 
     // Remove even more redundant constructs
     const i = (a: number, b: number): number => a + b;
-    console.log({i: i(1, 2)});
+    console.log({ i: i(1, 2) });
 }
 
 // We can "pull-out" the call signatures into a type
-type Log = (message: string, userId?: string) => void
+type Log = (message: string, userId?: string) => void;
 const log: Log = (message, userId = 'Not signed in') => {
     const time = new Date().toISOString();
     console.log(time, message, userId);
 };
 log('\x1b[1;33mPurchasing item 123\x1b[0m', 'user99');
-log('other')
+log('other');
 
 /*
     CONTEXTUAL TYPING
@@ -285,7 +285,7 @@ times(n => console.log(n), 4);
  */
 
 // Shorthand call signature
-type Log2 = (message: string, userId?: string) => void
+type Log2 = (message: string, userId?: string) => void;
 const log2: Log2 = (message, userId = 'Not signed in') => {
     const time = new Date().toISOString();
     console.log(time, message, userId);
@@ -293,7 +293,7 @@ const log2: Log2 = (message, userId = 'Not signed in') => {
 log2('\x1b[1;33mUsing shorthand call signature syntax\x1b[0m');
 
 // Full call signature
-type Log3 = { (message: string, userId?: string): void }
+type Log3 = { (message: string, userId?: string): void; };
 const log3: Log3 = (message, userId = 'Not signed in') => {
     const time = new Date().toISOString();
     console.log(time, message, userId);
@@ -305,11 +305,11 @@ log3('\x1b[1;34mUsing full call signature syntax\x1b[0m');
     For more complicated cases, such as overloading the function, the full call signature syntax is necessary.
  */
 
-type Reservation = string
+type Reservation = string;
 type Reserve = {
-    (from: Date, to: Date, destination: string): Reservation
-    (from: Date, destination: string): Reservation
-}
+    (from: Date, to: Date, destination: string): Reservation;
+    (from: Date, destination: string): Reservation;
+};
 
 // That is ugly!
 // Anyhow, when using the "overloading" syntax above, type inference breaks.
@@ -323,9 +323,9 @@ const reserve: Reserve = (from: Date, toOrDestination: Date | string, destinatio
 };
 
 type Add = {
-    (a: number, b: number): number
-    (a: string, b: string): number
-}
+    (a: number, b: number): number;
+    (a: string, b: string): number;
+};
 
 // I don't see how that could ever be a good idea!
 const add: Add = (a: number | string, b: number | string): number => {
@@ -333,8 +333,8 @@ const add: Add = (a: number | string, b: number | string): number => {
     const b2 = typeof b === 'string' ? parseInt(b) : b;
     return a2 + b2;
 };
-console.log('1 + 2 =', add(1, 2))
-console.log('"1" + "2" =', add("1", "2"))
+console.log('1 + 2 =', add(1, 2));
+console.log('"1" + "2" =', add("1", "2"));
 
 // Won't compile!
 // const add2: Add = (a: number, b: number) => {
@@ -381,9 +381,9 @@ const filter: Filter = (array, f) => {
 
 // Anyhow, let's deal with generics.
 type Filter = {
-    <T>(array: T[], f: (item: T) => boolean): T[]
-}
-type Filter2 = <T>(array: T[], f: (item: T) => boolean) => T[]
+    <T>(array: T[], f: (item: T) => boolean): T[];
+};
+type Filter2 = <T>(array: T[], f: (item: T) => boolean) => T[];
 
 const filter: Filter2 = (array, f) => {
     const result = [];
@@ -398,10 +398,10 @@ console.log("Filtering evens:", filter([1, 2, 3], item => item % 2 === 0));
 console.log("Filtering non blank:", filter(["a", "", " ", "c"], item => item.trim() !== ""));
 
 const names = [
-    {firstName: 'John'},
-    {firstName: 'Mary'},
-    {firstName: 'Joe'},
-]
+    { firstName: 'John' },
+    { firstName: 'Mary' },
+    { firstName: 'Joe' },
+];
 
 console.log("Names starting with 'J'", filter(names, _ => _.firstName.startsWith('J')));
 console.log("Names starting with 'J'", filter(names, n => n.firstName.startsWith('J')));
@@ -411,7 +411,7 @@ console.log("Names starting with 'J'", filter(names, n => n.firstName.startsWith
  */
 
 // If the generic type parameter is declared too early...
-type Filter3<T> = (array: T[], f: (item: T) => boolean) => T[]
+type Filter3<T> = (array: T[], f: (item: T) => boolean) => T[];
 
 // ...this forces the caller to declare the corresponding concrete type too early too.
 // As a result, this function isn't generic anymore
@@ -458,4 +458,167 @@ console.log("Map (* 2) -> string:", map<number, string>([1, 2, 3], n => (n * 2).
 /*
     GENERIC TYPE ALIASES
  */
+
+type MyEvent<T> = {
+    target: T;
+    type: string;
+};
+
+type ButtonEvent = MyEvent<HTMLButtonElement>;
+
+
+
+// Commenting out, Node does not know `document`!
+// When you use a generic type like `MyEvent`, you have to explicitly bind its type
+// parameters when you use the type; they won't be inferred for you.
+// const myEvent: MyEvent<HTMLButtonElement | null> = {
+//     target: document.querySelector('#myButton'),
+//     type: 'click',
+// };
+
+type TimedEvent<T> = {
+    event: MyEvent<T>; // refers to the outer `T`
+    from: Date;
+    to: Date;
+};
+
+// You can use a generic type alias in a function's signature too.
+function triggerEvent<T>(event: MyEvent<T>/* refers to the outer `T` */): void {
+    console.log('triggered:', event);
+}
+
+// Commenting out, Node does not know `document`!
+// triggerEvent({ // `T` is `Element | null`
+//     target: document.querySelector('#myBtn'),
+//     type: 'mouseover'
+// });
+
+/*
+    BOUNDED POLYMORPHISM
+*/
+
+// Sometimes, saying we want a thing of type `T` is not enough!
+// Sometimes, we want a thing of type `U` that should *at least* be of type `T`.
+
+// Example: we want to implement a binary tree, consisting of:
+//          - Regular TreeNodes
+//          - LeafNodes which are TreeNodes that don't have children
+//          - InnerNodes which are TreeNodes that do have children
+
+type TreeNode = {
+    value: string;
+};
+
+type LeafNode = TreeNode & {
+    isLeaf: true;
+};
+
+type InnerNode = TreeNode & {
+    // One child or 2 children
+    children: [TreeNode] | [TreeNode, TreeNode];
+};
+
+const a: TreeNode = { value: 'a' };
+const b: LeafNode = { value: 'b', isLeaf: true };
+const c: InnerNode = { value: 'c', children: [b] };
+
+// What we want:
+const a1: TreeNode = mapNode(a, s => s.toUpperCase());
+const b1: LeafNode = mapNode(b, s => s.toUpperCase());
+const c1: InnerNode = mapNode(c, s => s.toUpperCase());
+
+
+// `T` has an "upper bound" of `TreeNode`.
+// `T` can be either a `TreeNode`, or a subtype of `TreeNode`
+// Thusly, this limits what `T` can be passed in. For instance `T` may not be a number!
+// And so, it must have a `.value` property!
+function mapNode<T extends TreeNode>(node: T, f: (value: string) => string): T {
+    // node.value = f(node.value);
+    // return node;
+    return {
+        ...node,
+        value: f(node.value),
+    };
+}
+
+type A = number | Date;
+
+const an: A = 1;
+const ad: A = new Date();
+
+type B = { a: number; } & { b: Date; };
+const intersect: B = { a: 1, b: new Date() };
+
+// We can also enforce multiple type constraints via `&`
+
+type HasSides = { numberOfSides: number; };
+type SidesHaveLength = { sideLength: number; };
+
+// `MyShape` only exists within this definition of the generic type
+function logPerimeter<MyShape extends HasSides & SidesHaveLength>(s: MyShape): MyShape {
+    console.log(s.numberOfSides * s.sideLength);
+    return s;
+}
+
+const shape = logPerimeter({ numberOfSides: 4, sideLength: 8 });
+
+type Square = HasSides & SidesHaveLength;
+const sq: Square = { numberOfSides: 4, sideLength: 3 };
+
+// Very confusing examples from the author... Why would log return a shape?? Anyhow let's continue...
+const sq2: Square = logPerimeter(sq);
+
+// Reimplement JavaScript's `call` function
+function call<T extends unknown[], R>(
+    f: (...args: T) => R,
+    ...args: T
+): R {
+    return f(...args);
+}
+function fill(length: number, value: string): string[] {
+    return Array.from({ length }, () => value);
+}
+
+// Now **THAT** is crazy! It's type-safe!!
+call(fill, 10, 'a');
+
+/*
+    Here is the breakdown of how that works:
+
+    - call is a variadic function that has 2 parameters: T and R
+        - T is a subtype of unknown[]
+        - in other words T is an array or tuple of any type
+    - call's first parameter is the variadic function f.
+        - who's args of type T will be identical to...
+    - ...the remaining args for call
+    - the type R returned from f will be the return type of call
+*/
+
+/*
+    GENERIC TYPE DEFAULTS
+*/
+
+// We can specify a "default" generic type
+type MyEvent2<T = HTMLElement> = {
+    target: T;
+    type: string;
+};
+
+// before
+// const myEvent1: MyEvent<HTMLElement> = { target: document.body, type: 'click' };
+// after
+// const myEvent2: MyEvent2 = { target: document.body, type: 'click' };
+
+// We can also make T a subtype of HTMLElement
+// Unfortunately, the book is not quite clear how that could be used (I can't constraint
+// the event to HTMLInputElement for instance)
+type MyEvent3<T extends HTMLElement = HTMLElement> = {
+    target: T;
+    type: string;
+};
+// const myEvent3: MyEvent3 = { target: document.body, type: 'click' };
+
+/*
+    TYPE-DRIVEN DEVELOPMENT
+*/
 
