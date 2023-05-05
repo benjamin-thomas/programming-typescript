@@ -73,7 +73,7 @@
 }
 
 {
-    // Default params - may not appear last
+    // Default params - must appear last too
     function log(message: string, userId = 'Not signed in'): void {
         const time = new Date().toLocaleTimeString();
         console.log(time, message, userId);
@@ -265,7 +265,7 @@ log('other');
  */
 
 // Similar to the prior example, we can define a function as such
-function times(f: (index: number) => void, n: number) {
+function times(f: (index: number) => void, n: number): void {
     for (let i = 0; i < n; i++) {
         f(i);
     }
@@ -314,7 +314,7 @@ type Reserve = {
 // That is ugly!
 // Anyhow, when using the "overloading" syntax above, type inference breaks.
 const reserve: Reserve = (from: Date, toOrDestination: Date | string, destination?: string) => {
-    // Oh no, I don't like that!
+    // Oh no, I don't like that! (--> see exercises below, final implementation is much more reasonable)
     if (toOrDestination instanceof Date && destination !== undefined) {
         return "one-way!";
     } else {
@@ -622,3 +622,93 @@ type MyEvent3<T extends HTMLElement = HTMLElement> = {
     TYPE-DRIVEN DEVELOPMENT
 */
 
+/*
+    EXERCISES
+
+    1. TS can infer a function params' types + its return value
+    2. Instead of JS' `arguments` object, use ...rest params and make the fn variadic
+    3. Overload `reserve` with a 3rd option: no start date. See implementation below.
+    4. Skip. I'll have to play more with the type system before tackling this
+    5. Implement `is`, a small typesafe assertion library. See below.
+*/
+
+// Optional param must come last!
+type Reserve3 = {
+    (dest: string, from: Date): number;
+    (dest: string): number;
+};
+const reserve3: Reserve3 = (_dest: string, _from?: Date) => {
+    return 0;
+};
+
+type Reservation2 = string;
+type Reserve2 = {
+    (destination: string): Reservation2;
+    (destination: string, from: Date): Reservation2;
+    (destination: string, from: Date, to: Date): Reservation2;
+};
+
+// I initially highly disliked the author's suggestion for function overloading
+// I find this implementation to be much more reasonable however (kinda)
+const reserve2: Reserve2 = (dest: string, dep?: Date, ret?: Date) => {
+    if (dep && ret) { // having to check that `dep` is not undefined is kinda unfortunate
+        return `Return flight ticket booked for ${dest.toUpperCase()} (${dep.toDateString()} => ${ret.toDateString()})`;
+    } else if (dep) {
+        return `One way ticket booked for ${dest.toUpperCase()} (${dep.toDateString()})`;
+    } else {
+        return `Immediate departure for: ${dest.toUpperCase()}`;
+    }
+};
+
+const tomorrow = new Date(Date.now() + 60_000 * 60 * 24);
+const nextWeek = new Date(Date.now() + 60_000 * 60 * 24 * 7);
+console.log(reserve2('Paris'));
+console.log(reserve2('London', tomorrow));
+console.log(reserve2('Rome', tomorrow, nextWeek));
+
+// Assertion lib `is`
+
+function is<T>(...args: T[]): boolean {
+    for (let i = 1; i < args.length; i++) {
+        const prev = args[i - 1];
+        const curr = args[i];
+        if (curr !== prev) return false;
+    }
+    return true;
+}
+
+console.log('Both strings are not equal, should return false =>',
+    is('A', 'B')
+);
+console.log('Both strings are equal, should return true =>',
+    is('A', 'A')
+);
+
+console.log('Both bools are not equal, should return false =>',
+    is(true, false)
+);
+console.log('Both bools are equal, should return true =>',
+    is(true, true),
+    is(false, false)
+);
+
+console.log('Both numbers are equal, should return true =>',
+    is(42, 42)
+);
+console.log('Both numbers are not equal, should return false =>',
+    is(42, 1)
+);
+
+// Should not compile => OK
+// is(10, 'foo');
+
+// Should handle variadic args
+// NOTE: the author suggests feeding in arrays, but we haven't learned about array equality yet so I'll use numbers instead.
+console.log('All numbers are equal, should return true =>',
+    is(1, 1, 1),
+    is(2, 2, 2),
+);
+console.log('All numbers are not equal, should return false =>',
+    is(1, 1, 2),
+    is(2, 1, 1),
+);
