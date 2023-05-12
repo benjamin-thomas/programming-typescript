@@ -26,3 +26,11 @@ Workflow: (editor provides eslint feedback)
 	echo ./dist/index.js | entr -c node /_
 
 ```
+
+Optionally, add this start entry for better editor integration:
+
+```
+"scripts": {
+  "start": "eslint --max-warnings 0 ./src/ && tsc && node ./dist/index.js"
+},
+```
